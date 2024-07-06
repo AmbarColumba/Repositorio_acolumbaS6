@@ -11,20 +11,32 @@
             FontSize="20"
             HorizontalTextAlignment="Center"/>
         <ListView x:Name="listaEstudiantes">
+            <ListView.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="CODIGO" FontSize="16" FontAttributes="Bold" TextColor="Red" Grid.Column="0" HorizontalTextAlignment="Center"/>
+                    <Label Text="NOMBRE" FontSize="16" FontAttributes="Bold" TextColor="Red" Grid.Column="1" HorizontalTextAlignment="Center"/>
+                    <Label Text="APELLIDO" FontSize="16" FontAttributes="Bold" TextColor="Red" Grid.Column="2" HorizontalTextAlignment="Center"/>
+                    <Label Text="EDAD" FontSize="16" FontAttributes="Bold" TextColor="Red" Grid.Column="3" HorizontalTextAlignment="Center"/>
+                </Grid>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <Label x:Name="lblNombre" Text="{Binding nombre}"/>
-                            <Label x:Name="lblApellido" Text="{Binding apellido}"/>
-
+                        <StackLayout Orientation="Horizontal">
+                            <Label x:Name="lblCodigo" Text="{Binding codigo}" Margin="5" WidthRequest="55"/>
+                            <Label x:Name="lblNombre" Text="{Binding nombre}" Margin="5" WidthRequest="150"/>
+                            <Label x:Name="lblApellido" Text="{Binding apellido}" Margin="5" WidthRequest="150"/>
+                            <Label x:Name="lblEdad" Text="{Binding edad}" Margin="5" WidthRequest="50"/>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
         </ListView>
-
     </VerticalStackLayout>
-
 </ContentPage>
