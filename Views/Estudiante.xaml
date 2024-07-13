@@ -10,7 +10,7 @@
             Text="Consumo de servicio web - GET"
             FontSize="20"
             HorizontalTextAlignment="Center"/>
-        <ListView x:Name="listaEstudiantes">
+        <ListView x:Name="listaEstudiantes" ItemSelected="listaEstudiantes_ItemSelected">
             <ListView.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -38,5 +38,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="btnAgregar"
+                Text="Agregar estudiante"
+                Clicked="btnAgregar_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>
