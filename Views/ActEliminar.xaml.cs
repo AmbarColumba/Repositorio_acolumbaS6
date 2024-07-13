@@ -1,58 +1,48 @@
+
 using acolumbaS6.Modelos;
+using Newtonsoft.Json;
 using System.Net;
+using System.Text;
 
 namespace acolumbaS6.Views
 {
     public partial class ActEliminar : ContentPage
     {
-        private Modelos.estudiante estudianteActual;
-
-        public ActEliminar(Modelos.estudiante estudiante)
+        private const string urlWS = "http://192.168.17.22/semana6/estudiantews.php";
+        private readonly HttpClient cliente = new HttpClient();
+        public ActEliminar(estudiante estudiante)
         {
             InitializeComponent();
-            estudianteActual = estudiante;
-
-            txtCodigo.Text = estudianteActual.codigo.ToString();
-            txtNombre.Text = estudianteActual.nombre;
-            txtApellido.Text = estudianteActual.apellido;
-            txtEdad.Text = estudianteActual.edad.ToString();
+            txtCodigo.Text = estudiante.codigo.ToString();
+            txtNombre.Text = estudiante.nombre;
+            txtApellido.Text = estudiante.apellido;
+            txtEdad.Text = estudiante.edad.ToString();
         }
 
-        private void btnActualizar_Clicked(object sender, EventArgs e)
+        private async void btnActualizar_Clicked(object sender, EventArgs e)
         {
-            try
+            var estudiante = new
             {
-                WebClient cliente = new WebClient();
-                var parametros = new System.Collections.Specialized.NameValueCollection();
-                parametros.Add("id", txtCodigo.Text);
-                parametros.Add("nombre", txtNombre.Text);
-                parametros.Add("apellido", txtApellido.Text);
-                parametros.Add("edad", txtEdad.Text);
-
-                cliente.UploadValues("http://192.168.17.22/semana6/estudiantews.php", "PUT", parametros);
-                DisplayAlert("Éxito", "Registro actualizado correctamente", "OK");
-            }
-            catch (Exception ex)
-            {
-                DisplayAlert("Alerta", ex.Message, "OK");
-            }
+                codigo = txtCodigo.Text,
+                nombre = txtNombre.Text,
+                apellido = txtApellido.Text,
+                edad = txtEdad.Text
+            };
+            var json = JsonConvert.SerializeObject(estudiante);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await cliente.PutAsync(urlWS, content);
+            string respuesta = await response.Content.ReadAsStringAsync();
+            DisplayAlert("Alerta", respuesta, "OK");
+            Navigation.PushAsync(new vEstudiante());
         }
 
-        private void btnEliminar_Clicked(object sender, EventArgs e)
+        private async void btnEliminar_Clicked(object sender, EventArgs e)
         {
-            try
-            {
-                WebClient cliente = new WebClient();
-                var parametros = new System.Collections.Specialized.NameValueCollection();
-                parametros.Add("id", txtCodigo.Text);
+            var codigo = txtCodigo.Text;
+            var response = await cliente.DeleteAsync($"{urlWS}?codigo={codigo}");
+            string respuesta = await response.Content.ReadAsStringAsync();
+            Navigation.PushAsync(new vEstudiante());
 
-                cliente.UploadValues("http://192.168.17.22/semana6/estudiantews.php", "DELETE", parametros);
-                DisplayAlert("Éxito", "Registro eliminado correctamente", "OK");
-            }
-            catch (Exception ex)
-            {
-                DisplayAlert("Alerta", ex.Message, "OK");
-            }
         }
     }
 }

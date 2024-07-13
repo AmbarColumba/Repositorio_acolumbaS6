@@ -67,10 +67,10 @@
 	  <MauiXaml Update="Views\ActEliminar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Estudiante.xaml">
+	  <MauiXaml Update="Views\vAgregar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\vAgregar.xaml">
+	  <MauiXaml Update="Views\vEstudiante.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
